@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.cafekiosk.unit.beverage.Americano;
 import sample.cafekiosk.unit.beverage.Latte;
+import sample.cafekiosk.unit.order.Order;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -81,5 +84,43 @@ class CafeKioskTest {
 
         cafeKiosk.removeAll();
         assertThat(cafeKiosk.getBeverages()).isEmpty();
+    }
+
+    @Test
+    @DisplayName("음료 주문 테스트")
+    void createOrder() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        cafeKiosk.add(americano);
+
+        Order order = cafeKiosk.createOrder();
+
+        assertThat(order.getBeverages()).hasSize(1);
+        assertThat(order.getBeverages().get(0).getName()).isEqualTo("아메리카노");
+    }
+
+    @Test
+    @DisplayName("음료 주문 테스트")
+    void createOrderCurrentTime() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        cafeKiosk.add(americano);
+
+        Order order = cafeKiosk.createOrder(LocalDateTime.of(2024, 2, 3, 10, 0));
+
+        assertThat(order.getBeverages()).hasSize(1);
+        assertThat(order.getBeverages().get(0).getName()).isEqualTo("아메리카노");
+    }
+
+    @Test
+    @DisplayName("음료 주문 예외 테스트")
+    void createOrderOutSideOpenTime() {
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        cafeKiosk.add(americano);
+
+        assertThatThrownBy(() -> cafeKiosk.createOrder(LocalDateTime.of(2024, 2, 3, 9, 59)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("주문 시간이 아닙니다. 관리자에게 문의해주세요.");
     }
 }
