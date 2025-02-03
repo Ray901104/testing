@@ -16,6 +16,7 @@ class CafeKioskTest {
 
     // 수동 테스트
     @Test
+    @DisplayName("음료를 주문 목록에 담는 수동 테스트 예시 - 지양")
     void add_manual_test() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
@@ -25,7 +26,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 추가 테스트")
+    @DisplayName("음료 1개를 추가하면 주문 목록에 담긴다.")
     void add() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         cafeKiosk.add(new Americano());
@@ -37,7 +38,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 여러 개 추가 테스트")
+    @DisplayName("음료 여러 개를 추가하면 주문 목록에 모두 담긴다.")
     void addSeveralBeverages() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -48,7 +49,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 여러 개 추가 테스트 - 경계값")
+    @DisplayName("음료를 0개(경계값) 추가하면 주문이 실패한다.")
     void addZeroBeverages() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -59,20 +60,22 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 제거 테스트")
+    @DisplayName("음료를 1개 제거하면 주문 목록에서 1개가 사라진다.")
     void remove() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
+        Latte latte = new Latte();
 
         cafeKiosk.add(americano);
-        assertThat(cafeKiosk.getBeverages()).hasSize(1);
+        cafeKiosk.add(latte);
+        assertThat(cafeKiosk.getBeverages()).hasSize(2);
 
         cafeKiosk.remove(americano);
-        assertThat(cafeKiosk.getBeverages()).isEmpty();
+        assertThat(cafeKiosk.getBeverages()).hasSize(1);
     }
 
     @Test
-    @DisplayName("음료 전부 제거 테스트")
+    @DisplayName("음료를 전부 제거하면 주문 목록이 사라진다.")
     void removeAll() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -87,7 +90,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("주문 총액 계산 테스트")
+    @DisplayName("음료를 담으면 주문 총액을 계산할 수 있다.")
     void calculateTotalPrice() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -102,7 +105,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 주문 테스트")
+    @DisplayName("음료를 주문할 수 있다.")
     void createOrder() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -115,7 +118,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 주문 테스트")
+    @DisplayName("영업 시간에는 주문을 생성할 수 있다.")
     void createOrderCurrentTime() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
@@ -128,7 +131,7 @@ class CafeKioskTest {
     }
 
     @Test
-    @DisplayName("음료 주문 예외 테스트")
+    @DisplayName("영업 시작 시간 이전에는 주문을 생성할 수 없다.")
     void createOrderOutSideOpenTime() {
         CafeKiosk cafeKiosk = new CafeKiosk();
         Americano americano = new Americano();
