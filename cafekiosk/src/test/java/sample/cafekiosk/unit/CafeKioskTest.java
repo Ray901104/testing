@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CafeKioskTest {
 
-
     // 수동 테스트
     @Test
     @DisplayName("음료를 주문 목록에 담는 수동 테스트 예시 - 지양")
