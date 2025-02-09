@@ -3,6 +3,7 @@ package sample.cafekiosk.spring.api.service.mail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -30,8 +31,11 @@ class MailServiceTest {
     @Test
     void sendMail() {
         // given
-        when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
-                .thenReturn(true);
+//        Mockito.when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+//                .thenReturn(true);
+
+        BDDMockito.given(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+                .willReturn(true);
 
         // when
         boolean result = mailService.sendMail("", "", "", "");
